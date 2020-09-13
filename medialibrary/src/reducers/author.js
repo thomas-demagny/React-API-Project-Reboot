@@ -6,9 +6,13 @@ import {
 
 const stateInit = {
     authors : [],
-    details : [],
+    details : {},
     author : '',
-    active : false
+    name: '',
+    bio: '',
+    shopName: '',
+    books: [],
+   // active : false
 }
 
 const reducer = (state = stateInit, action = {}) => {
@@ -26,8 +30,8 @@ const reducer = (state = stateInit, action = {}) => {
             let details = action.payload
             return {
                 ...state,
-                detail : details,
-                active: true
+                details : details,
+               // active: true
             }
 
         default:

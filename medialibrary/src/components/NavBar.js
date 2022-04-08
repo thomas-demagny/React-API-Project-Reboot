@@ -1,16 +1,14 @@
 import React from "react";
-import { NavLink } from 'react-router-dom';
-import Container from "@material-ui/core/Container";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import AppBar from "@material-ui/core/AppBar";
+import {NavLink} from "react-router-dom";
+import {AppBar, Container, Toolbar, Typography} from "@material-ui/core";
+import HomeIcon from '@material-ui/icons/Home';
+import {useStyles} from "../cssStyles/authorStyle";
 
-
-function NavBar(){
-
+export default function NavBar() {
+    const classes = useStyles()
     return (
         <Container>
-            <AppBar position="relative">
+            <AppBar className={classes.navBar}>
                 <Toolbar>
                     <Typography variant="h6" color="inherit" noWrap>
                         Authors
@@ -18,6 +16,7 @@ function NavBar(){
                 </Toolbar>
                 <NavLink to="/">
                     <button>
+                        <HomeIcon className={classes.icon}/>
                         Home
                     </button>
                 </NavLink>
@@ -26,13 +25,7 @@ function NavBar(){
                         Add Author
                     </button>
                 </NavLink>
-          </AppBar>
+            </AppBar>
         </Container>
     )
-
 }
-
-export default NavBar;
-
-
-

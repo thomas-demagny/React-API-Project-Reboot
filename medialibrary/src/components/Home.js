@@ -1,16 +1,11 @@
-import React, {useEffect, useReducer, useState} from "react";
-import {Container, Button, CardActionArea} from "@material-ui/core";
+import React, {useEffect} from "react";
+import {Container, Button} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {author_details, set_authors} from "../actions/actions-types";
-import CardContent from "@material-ui/core/CardContent";
-import Card from "@material-ui/core/Card";
-import author from "../reducers/author";
+import {author_details, fetch_authors, set_author} from "../actions/actions-types";
 
+export default function Home() {
 
-
-function Home() {
-
-    const { authors, details, active} = useState((state) => state);
+    const {authors, details, active} = useSelector((state) => state);
     const dispatch = useDispatch();
     useEffect(
         () => {
@@ -18,42 +13,53 @@ function Home() {
             const fetchAuthor = async () => {
                 const results = await fetch("http://localhost:3000/authors");
                 const data = await results.json();
-                dispatch(set_authors(data));
+                dispatch(fetch_authors(data));
             }
             fetchAuthor();
-        },[dispatch]
+        }, []
     );
 
-    return(
-<>
-        <Container  maxWidth="sm">
-            <h2>Author's List</h2>
-            {authors.map((author) => (
-                <div>
-                    {author.name}
+    return (
+        <>
+            <Container maxWidth="sm">
+                <h2>Author's List</h2>
+                {authors.map((auth) => (
                     <div>
-                        <Button variant="outlined" size="small" color="primary" onClick={() => dispatch(author_details(author))}>Detail</Button>
-                        <Button variant="contained" size="small" color="secondary">
-                            Delete
-                        </Button>
+                        {auth.name}
+                        <div>
+                            <Button variant="outlined" size="small" color="primary"
+                                    onClick={() => dispatch(author_details(auth))}>Detail</Button>
+                            <Button variant="contained" size="small" color="secondary">
+                                Delete
+                            </Button>
+                        </div>
+
                     </div>
-                    {author.bio}{" "}{author.shop_name}
-                </div>
-            ))}
+                ))}
 
-                { /* {active ? ( <p>{details.shop_name}</p>):null}*/}
-
-
-
-
-        </Container>
-
-</>
-    )
+                {active ? (
+                    <div>
+                        <h2>Details</h2>
+                        <p>
+                            <ul>
+                                <li>ID : {details.id}</li>
+                                <li>BIO : {details.bio}</li>
+                                <li>SHOP : {details.shop_name}</li>
+                                <li>
+                                    BOOKS :
+                                    <ul>
+                                        {details.books.map((detail) => (
+                                            <li>{detail}</li>
+                                        ))}
+                                    </ul>
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
+                        ) : null}
+            </Container>
+        </>
+        )
 }
-export default Home;
-
-
-
 
 

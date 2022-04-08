@@ -1,0 +1,5 @@
+export const SET_AUTHOR = "SET_AUTHOR"
+export const FETCH_AUTHORS = "FETCH_AUTHORS"
+export const AUTHOR_DETAILS = "AUTHOR_DETAILS"
+export const ADD_BOOK = "ADD_BOOK"
+export const ADD_AUTHOR = "ADD_AUTHOR"

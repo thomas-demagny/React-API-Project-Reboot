@@ -1,5 +1,5 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
 const port = 3000;
@@ -61,42 +61,42 @@ let authors = new Map([
 ]);
 
 // get all authors
-app.get('/authors', (req, res) => {
+app.get("/authors", (req, res) => {
 
     res.json( [ ...authors.values() ] );
 });
 
 // store new Author
-app.post('/add', (req, res) => {
+app.post("/add", (req, res) => {
     const { name, id } = req.body;
     authors.set(id, req.body);
 
     res.json({
-        status: 'success',
+        status: "success",
         name: name,
         id : id
     });
 });
 
 // get one author
-app.get('/author/:id', (req, res) => {
+app.get("/author/:id", (req, res) => {
     const { id } = req.params;
 
     if (authors.has(id)) {
         const author = authors.get(id);
         res.json({
-            status: 'success',
+            status: "success",
             id: id,
             author: JSON.stringify(author)
         });
     }
     else
-        res.status(404).send('Author not found'); // TODO gestion des authors non trouvé dans l'app
+        res.status(404).send("Author not found"); // TODO gestion des authors non trouvé dans l'app
 });
 
 // update One Author
 
-app.put('/author/:id', (req, res, next) => {
+app.put("/author/:id", (req, res, next) => {
     const { id } = req.params;
 
     if (authors.has(id)) {
@@ -104,31 +104,31 @@ app.put('/author/:id', (req, res, next) => {
 
         const author = authors.get(id);
         res.json({
-            status: 'success',
+            status: "success",
             id: id,
             author: JSON.stringify(author)
         });
     }
     else
-        res.status(404).send('Author not found');
+        res.status(404).send("Author not found");
 });
 
 
 // delete author
-app.delete('/author/:id', (req, res) => {
+app.delete("/author/:id", (req, res) => {
     const { id } = req.params;
 
     if (authors.has(id)) {
         const name = authors.get(id).name;
         authors.delete(id);
         res.json({
-            status: 'success deleted author',
+            status: "success deleted author",
             lastId: id + Math.random().toString(),
             name: name
         });
     }
     else
-        res.status(404).send('Author not found');
+        res.status(404).send("Author not found");
 });
 
 app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
